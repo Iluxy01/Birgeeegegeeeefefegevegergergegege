@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Биржа заказов — Регистрация</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="auth-wrapper">
+        <div class="auth-card" id="register-card">
+            <h1 class="logo">Биржа<span>Заказов</span></h1>
+            <p class="subtitle">Создайте аккаунт, чтобы начать работать</p>
+
+            <form id="register-form" novalidate>
+                <div class="field">
+                    <label for="name">Имя</label>
+                    <input type="text" id="name" name="name" placeholder="Ваше имя" autocomplete="name">
+                    <span class="error" id="error-name"></span>
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email">
+                    <span class="error" id="error-email"></span>
+                </div>
+
+                <div class="field">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" placeholder="Минимум 6 символов" autocomplete="new-password">
+                    <span class="error" id="error-password"></span>
+                </div>
+
+                <div class="field">
+                    <label for="password2">Повторите пароль</label>
+                    <input type="password" id="password2" name="password2" placeholder="Ещё раз пароль" autocomplete="new-password">
+                    <span class="error" id="error-password2"></span>
+                </div>
+
+                <div class="field">
+                    <label>Я хочу</label>
+                    <div class="role-switch">
+                        <label class="role-option">
+                            <input type="radio" name="role" value="customer" checked>
+                            <span>Размещать заказы</span>
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="contractor">
+                            <span>Выполнять заказы</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Зарегистрироваться</button>
+            </form>
+
+            <p class="switch-link">Уже есть аккаунт? <a href="#" id="show-login">Войти</a></p>
+        </div>
+
+        <div class="auth-card hidden" id="login-card">
+            <h1 class="logo">Биржа<span>Заказов</span></h1>
+            <p class="subtitle">Войдите в свой аккаунт</p>
+
+            <form id="login-form" novalidate>
+                <div class="field">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
+                    <span class="error" id="error-login-email"></span>
+                </div>
+
+                <div class="field">
+                    <label for="login-password">Пароль</label>
+                    <input type="password" id="login-password" placeholder="Ваш пароль" autocomplete="current-password">
+                    <span class="error" id="error-login-password"></span>
+                </div>
+
+                <button type="submit" class="btn-primary">Войти</button>
+            </form>
+
+            <p class="switch-link">Нет аккаунта? <a href="#" id="show-register">Зарегистрироваться</a></p>
+        </div>
+
+        <div class="app-shell hidden" id="app-shell">
+            <header class="app-header">
+                <div class="header-row">
+                    <div>
+                        <p class="eyebrow">Биржа заказов</p>
+                        <h1 id="screen-title">Главный экран</h1>
+                    </div>
+                    <div class="header-stats">
+                        <div class="header-stat" title="Активных заказов на бирже">
+                            <span class="header-stat-icon">📋</span>
+                            <strong id="header-stat-orders">0</strong>
+                            <span>заказов</span>
+                        </div>
+                        <div class="header-stat" title="Ваш баланс">
+                            <span class="header-stat-icon">💰</span>
+                            <strong id="header-stat-balance">0 ₽</strong>
+                            <span>баланс</span>
+                        </div>
+                    </div>
+                    <div class="avatar" id="header-avatar">И</div>
+                </div>
+                <div class="header-ticker" aria-hidden="true">
+                    <div class="header-ticker-track">
+                        <span class="ticker-live"><i></i>Биржа на связи</span>
+                        <span>🔥 Новые заказы каждый день</span>
+                        <span>⚡ Средний отклик — 2 часа</span>
+                        <span>💎 Топ-исполнители уже здесь</span>
+                        <span>🚀 Публикация заказа за минуту</span>
+                        <span>⭐ Честные рейтинги и отзывы</span>
+                        <span>🎯 Найди задание по себе</span>
+                        <span class="ticker-live"><i></i>Биржа на связи</span>
+                        <span>🔥 Новые заказы каждый день</span>
+                        <span>⚡ Средний отклик — 2 часа</span>
+                        <span>💎 Топ-исполнители уже здесь</span>
+                        <span>🚀 Публикация заказа за минуту</span>
+                        <span>⭐ Честные рейтинги и отзывы</span>
+                        <span>🎯 Найди задание по себе</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="app-screen" id="home-screen">
+                <div class="search-box">
+                    <span class="search-icon">⌕</span>
+                    <input type="search" id="home-search" placeholder="Найти задание..." autocomplete="off">
+                </div>
+
+                <div class="feed-filters" id="feed-filters">
+                    <select id="filter-topic" aria-label="Фильтр по теме">
+                        <option value="">Все темы</option>
+                    </select>
+                    <input type="number" id="filter-price-min" min="0" placeholder="Цена от">
+                    <input type="number" id="filter-price-max" min="0" placeholder="Цена до">
+                    <select id="filter-sort" aria-label="Сортировка">
+                        <option value="new">Сначала новые</option>
+                        <option value="cheap">Сначала дешёвые</option>
+                        <option value="expensive">Сначала дорогие</option>
+                    </select>
+                    <button type="button" class="filter-reset-btn" id="filter-reset">Сбросить</button>
+                </div>
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Лента</p>
+                        <h2>Подборка заданий</h2>
+                    </div>
+                    <span class="count-label" id="task-count-label">Скоро</span>
+                </div>
+
+                <div class="task-list" id="task-list" aria-label="Задания">
+                    <div class="task-skeleton"><span></span><span></span><span></span></div>
+                    <div class="task-skeleton"><span></span><span></span><span></span></div>
+                    <div class="task-skeleton"><span></span><span></span><span></span></div>
+                </div>
+
+            </section>
+
+            <section class="app-screen hidden" id="search-screen">
+                <div class="screen-intro">
+                    <p class="eyebrow">Поиск</p>
+                    <h2>Найдите подходящее задание</h2>
+                    <p>Введите запрос, чтобы поискать заказы по названию или описанию.</p>
+                </div>
+                <div class="search-box search-box-large">
+                    <span class="search-icon">⌕</span>
+                    <input type="search" id="search-screen-input" placeholder="Например, дизайн логотипа" autocomplete="off">
+                </div>
+
+                <div class="feed-filters" id="search-filters">
+                    <select id="s-filter-topic" aria-label="Фильтр по теме">
+                        <option value="">Все темы</option>
+                    </select>
+                    <input type="number" id="s-filter-price-min" min="0" placeholder="Цена от">
+                    <input type="number" id="s-filter-price-max" min="0" placeholder="Цена до">
+                    <select id="s-filter-sort" aria-label="Сортировка">
+                        <option value="relevance">По релевантности</option>
+                        <option value="new">Сначала новые</option>
+                        <option value="cheap">Сначала дешёвые</option>
+                        <option value="expensive">Сначала дорогие</option>
+                    </select>
+                    <button type="button" class="filter-reset-btn" id="s-filter-reset">Сбросить</button>
+                </div>
+
+                <div class="search-result-meta" id="search-result-meta"></div>
+                <div class="task-list search-results hidden" id="search-results" aria-label="Результаты поиска"></div>
+                <div class="empty-state" id="search-empty-state">
+                    <div class="empty-icon">⌕</div>
+                    <h3 id="search-empty-title">Начните поиск</h3>
+                    <p id="search-empty-text">Введите несколько слов — например, «бот телеграм».</p>
+                </div>
+            </section>
+
+            <section class="app-screen hidden" id="favorites-screen">
+                <div class="screen-intro">
+                    <p class="eyebrow">Закладки</p>
+                    <h2>Сохранённые</h2>
+                    <p>Задания, которые вы отметили сердечком.</p>
+                </div>
+                <div class="task-list hidden" id="favorites-list" aria-label="Сохранённые задания"></div>
+                <div class="empty-state hidden" id="favorites-empty-state">
+                    <div class="empty-icon">♡</div>
+                    <h3>Пока ничего не сохранено</h3>
+                    <p>Нажмите ♡ на карточке задания, чтобы вернуться к нему позже.</p>
+                </div>
+            </section>
+
+            <section class="app-screen hidden" id="taken-orders-screen">
+                <div class="screen-intro">
+                    <p class="eyebrow">Мои заказы</p>
+                    <h2>Взятые заказы</h2>
+                    <p>Здесь будут отображаться заказы, которые вы взяли и ещё не завершили.</p>
+                </div>
+                <div class="section-heading taken-orders-heading">
+                    <div>
+                        <p class="eyebrow">В работе</p>
+                        <h2>Незавершённые заказы</h2>
+                    </div>
+                    <span class="count-label" id="taken-order-count-label">0 заказов</span>
+                </div>
+                <div class="task-list" id="taken-order-list" aria-label="Взятые заказы"></div>
+                <div class="empty-state" id="taken-orders-empty-state">
+                    <div class="empty-icon">✓</div>
+                    <h3>Пока нет взятых заказов</h3>
+                    <p>Откройте подходящее задание в ленте и нажмите «Взять заказ».</p>
+                </div>
+                <div class="section-heading taken-orders-heading hidden" id="completed-orders-heading">
+                    <div>
+                        <p class="eyebrow">Завершено</p>
+                        <h2>Завершённые заказы</h2>
+                    </div>
+                </div>
+                <div class="admin-list hidden" id="completed-order-list"></div>
+            </section>
+
+            <section class="app-screen hidden" id="my-orders-screen">
+                <div class="screen-intro">
+                    <p class="eyebrow">Заказчик</p>
+                    <h2>Мои заказы</h2>
+                    <p>Все задания, которые вы создали, и их текущие статусы.</p>
+                </div>
+                <div class="admin-tabs my-orders-tabs">
+                    <button type="button" class="admin-tab active" data-my-tab="orders" id="my-tab-orders">Заказы</button>
+                    <button type="button" class="admin-tab" data-my-tab="history" id="my-tab-history">История</button>
+                </div>
+                <div id="my-orders-panel-orders">
+                    <div class="section-heading taken-orders-heading">
+                        <div>
+                            <p class="eyebrow">Мои задания</p>
+                            <h2>Список заказов</h2>
+                        </div>
+                        <span class="count-label" id="my-order-count-label">0 заказов</span>
+                    </div>
+                    <div class="task-list" id="my-order-list" aria-label="Мои заказы"></div>
+                    <div class="empty-state" id="my-orders-empty-state">
+                        <div class="empty-icon">⌑</div>
+                        <h3>У вас пока нет заказов</h3>
+                        <p>Создайте первое задание, чтобы оно появилось здесь.</p>
+                    </div>
+                </div>
+                <div id="my-orders-panel-history" class="hidden">
+                    <div class="section-heading taken-orders-heading">
+                        <div>
+                            <p class="eyebrow">История</p>
+                            <h2>Материалы заказов</h2>
+                        </div>
+                        <span class="count-label">хранятся 15 дней</span>
+                    </div>
+                    <div class="task-list hidden" id="history-list" aria-label="История материалов"></div>
+                    <div class="empty-state hidden" id="history-empty-state">
+                        <div class="empty-icon">⌛</div>
+                        <h3>История пуста</h3>
+                        <p>После нажатия галочки заказ с материалами попадает сюда на 15 дней.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="app-screen hidden" id="profile-screen">
+                <div class="profile-card">
+                    <div class="profile-avatar" id="profile-avatar">И</div>
+                    <h2 id="profile-name">Пользователь</h2>
+                    <p id="profile-email">email@example.com</p>
+                </div>
+                <div class="profile-info">
+                    <div><span>Роль</span><strong id="profile-role">Заказчик</strong></div>
+                    <div><span>Баланс</span><strong id="profile-balance">0 ₽</strong></div>
+                    <div><span>Статус</span><strong class="status-online">Аккаунт активен</strong></div>
+                </div>
+                <div class="profile-info hidden" id="profile-customer-stats">
+                    <div><span>Потрачено</span><strong id="profile-spent">0 ₽</strong></div>
+                    <div><span>Заказов в работе</span><strong id="profile-in-progress">0</strong></div>
+                    <div><span>Ваши оценки исполнителям</span><strong id="profile-given-rating">—</strong></div>
+                </div>
+                <div class="profile-info hidden" id="profile-contractor-stats">
+                    <div><span>Выполнено заказов</span><strong id="profile-completed-count">0</strong></div>
+                    <div><span>Рейтинг</span><strong id="profile-own-rating">—</strong></div>
+                    <div><span>Средний срок выполнения</span><strong id="profile-avg-duration">—</strong></div>
+                </div>
+                <div class="profile-section">
+                    <div class="section-heading admin-heading">
+                        <div>
+                            <p class="eyebrow">Активность</p>
+                            <h2 id="profile-completed-title">Выполненные заказы</h2>
+                        </div>
+                    </div>
+                    <div id="profile-completed-list"></div>
+                </div>
+                <div class="profile-section">
+                    <div class="section-heading admin-heading">
+                        <div>
+                            <p class="eyebrow">Отзывы</p>
+                            <h2 id="profile-reviews-title">Отзывы о вас</h2>
+                        </div>
+                    </div>
+                    <div id="profile-reviews-list"></div>
+                </div>
+                <button class="btn-secondary" id="edit-profile-btn">Редактировать профиль</button>
+                <button class="btn-secondary" id="notifications-btn">
+                    Уведомления
+                    <span class="badge hidden" id="notifications-badge">0</span>
+                </button>
+                <button class="btn-secondary" id="logout-btn">Выйти из аккаунта</button>
+            </section>
+
+            <section class="app-screen hidden" id="public-profile-screen">
+                <button class="back-button" id="back-from-public-profile" type="button">
+                    <span>←</span> Назад
+                </button>
+                <div class="profile-card">
+                    <div class="profile-avatar" id="public-profile-avatar">И</div>
+                    <h2 id="public-profile-name">Пользователь</h2>
+                    <p id="public-profile-email">email@example.com</p>
+                    <p class="public-profile-rating" id="public-profile-rating"></p>
+                </div>
+                <div class="profile-info">
+                    <div><span>Роль</span><strong id="public-profile-role">Исполнитель</strong></div>
+                    <div id="public-profile-completed-item"><span>Выполнено заказов</span><strong id="public-profile-completed">0</strong></div>
+                    <div><span>На бирже с</span><strong id="public-profile-since">—</strong></div>
+                </div>
+                <div class="detail-section" id="public-profile-about-section">
+                    <h3>О себе</h3>
+                    <p id="public-profile-about">Пока ничего не рассказано.</p>
+                </div>
+                <div class="detail-section" id="public-profile-skills-section">
+                    <h3>Навыки</h3>
+                    <div class="task-tags" id="public-profile-skills"></div>
+                </div>
+                <div class="section-heading admin-heading hidden" id="public-profile-orders-heading">
+                    <div>
+                        <p class="eyebrow">Портфолио</p>
+                        <h2>Выполненные заказы</h2>
+                    </div>
+                </div>
+                <div class="admin-list hidden" id="public-profile-orders"></div>
+                <div class="section-heading admin-heading hidden" id="public-profile-reviews-heading">
+                    <div>
+                        <p class="eyebrow">Отзывы</p>
+                        <h2 id="public-profile-reviews-title">Что пишут заказчики</h2>
+                    </div>
+                </div>
+                <div class="admin-list hidden" id="public-profile-reviews"></div>
+            </section>
+
+            <section class="app-screen hidden" id="admin-screen">
+                <div class="screen-intro">
+                    <p class="eyebrow">Администрирование</p>
+                    <h2>Админ-панель</h2>
+                    <p>Управление пользователями и заказами биржи.</p>
+                </div>
+
+                <div class="admin-stats">
+                    <div class="admin-stat">
+                        <strong id="admin-stat-users">0</strong>
+                        <span>Пользователей</span>
+                    </div>
+                    <div class="admin-stat">
+                        <strong id="admin-stat-orders">0</strong>
+                        <span>Заказов</span>
+                    </div>
+                    <div class="admin-stat">
+                        <strong id="admin-stat-taken">0</strong>
+                        <span>В работе</span>
+                    </div>
+                </div>
+
+                <div class="admin-tabs">
+                    <button type="button" class="admin-tab active" data-admin-tab="review">Проверка</button>
+                    <button type="button" class="admin-tab" data-admin-tab="users">Пользователи</button>
+                    <button type="button" class="admin-tab" data-admin-tab="orders">Заказы</button>
+                </div>
+
+                <div class="admin-tab-panel" id="admin-tab-review">
+                    <div class="section-heading admin-heading">
+                        <div>
+                            <p class="eyebrow">Модерация</p>
+                            <h2>Новые заказы</h2>
+                        </div>
+                    </div>
+                    <div class="admin-list" id="admin-review-orders"></div>
+
+                    <div class="section-heading admin-heading">
+                        <div>
+                            <p class="eyebrow">Модерация</p>
+                            <h2>Сдача работ</h2>
+                        </div>
+                    </div>
+                    <div class="admin-list" id="admin-review-submits"></div>
+                </div>
+
+                <div class="admin-tab-panel hidden" id="admin-tab-users">
+                    <div class="section-heading admin-heading">
+                        <div>
+                            <p class="eyebrow">Пользователи</p>
+                            <h2>Все пользователи</h2>
+                        </div>
+                    </div>
+                    <div class="admin-filters">
+                        <input type="text" id="admin-user-search" placeholder="Поиск по имени или email" autocomplete="off">
+                        <select id="admin-user-role-filter" aria-label="Фильтр по роли">
+                            <option value="">Все роли</option>
+                            <option value="customer">Заказчики</option>
+                            <option value="contractor">Исполнители</option>
+                        </select>
+                    </div>
+                    <div class="admin-list" id="admin-users-list"></div>
+                </div>
+
+                <div class="admin-tab-panel hidden" id="admin-tab-orders">
+                    <div class="section-heading admin-heading">
+                        <div>
+                            <p class="eyebrow">Заказы</p>
+                            <h2>Все заказы</h2>
+                        </div>
+                    </div>
+                    <div class="admin-filters">
+                        <input type="text" id="admin-order-search" placeholder="Поиск по названию или автору" autocomplete="off">
+                        <select id="admin-order-status-filter" aria-label="Фильтр по статусу">
+                            <option value="">Все статусы</option>
+                            <option value="pending">На проверке</option>
+                            <option value="published">Опубликован</option>
+                        </select>
+                    </div>
+                    <div class="admin-list" id="admin-orders-list"></div>
+
+                    <div class="section-heading admin-heading">
+                        <div>
+                            <p class="eyebrow">Активность</p>
+                            <h2>Взятые заказы</h2>
+                        </div>
+                    </div>
+                    <div class="admin-list" id="admin-taken-list"></div>
+                </div>
+            </section>
+
+            <section class="app-screen hidden" id="order-details-screen">
+                <button class="back-button" id="back-to-orders" type="button">
+                    <span>←</span> К заданиям
+                </button>
+                <div class="order-detail-layout">
+                    <div class="order-detail-media">
+                        <div class="order-detail-photo" aria-label="Место для фотографии задания">Фото задания</div>
+                        <p class="detail-date detail-date-under-photo" id="detail-date"></p>
+                        <div class="detail-publisher">
+                            <div class="profile-avatar detail-avatar" id="detail-author-avatar">И</div>
+                            <div>
+                                <p class="detail-label">Опубликовал</p>
+                                <strong class="profile-link" id="detail-author" title="Открыть профиль">Пользователь</strong>
+                                <span class="rating-stars" id="detail-author-rating"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-detail-content">
+                        <div class="order-detail-heading">
+                            <div>
+                                <span class="task-topic" id="detail-topic">Тема</span>
+                                <h2 id="detail-title">Название задания</h2>
+                            </div>
+                            <strong class="detail-price" id="detail-price">0 ₽</strong>
+                        </div>
+                        <p class="detail-description" id="detail-description"></p>
+
+                        <div class="detail-section">
+                            <h3>Срок выполнения</h3>
+                            <p id="detail-deadline">Не указан</p>
+                        </div>
+
+                        <div class="detail-section">
+                            <h3>Дополнительные услуги</h3>
+                            <p id="detail-extras">Без дополнительных услуг</p>
+                        </div>
+
+                        <div class="detail-section">
+                            <h3>Теги</h3>
+                            <div class="task-tags" id="detail-tags"></div>
+                        </div>
+
+                        <div class="order-actions">
+                            <button class="btn-primary order-action-btn hidden" id="take-order-btn" type="button">Откликнуться</button>
+                            <button class="btn-primary order-action-btn hidden" id="complete-order-btn" type="button">Сдать работу</button>
+                            <button class="btn-secondary order-action-btn hidden" id="cancel-order-btn" type="button">Отменить</button>
+                            <button class="btn-secondary order-action-btn hidden" id="edit-order-btn" type="button">Редактировать</button>
+                            <button class="btn-secondary order-action-btn btn-danger hidden" id="delete-order-btn" type="button">Удалить заказ</button>
+                        </div>
+                        <p class="order-status-note hidden" id="order-status-note"></p>
+                    </div>
+                </div>
+            </section>
+
+            <nav class="bottom-nav" aria-label="Основная навигация">
+                <button class="nav-item active" data-screen="home-screen" data-title="Главный экран">
+                    <span class="nav-icon">⌂</span>
+                    <span>Главная</span>
+                </button>
+                <button class="nav-item" data-screen="search-screen" data-title="Поиск заданий">
+                    <span class="nav-icon">⌕</span>
+                    <span>Поиск</span>
+                </button>
+                <button class="nav-item" data-screen="favorites-screen" data-title="Сохранённые">
+                    <span class="nav-icon">♡</span>
+                    <span>Избранное</span>
+                </button>
+                <button class="nav-item nav-create-order hidden" id="open-create-order" data-title="Создать заказ" aria-label="Создать заказ">
+                    <span class="nav-icon nav-create-icon" aria-hidden="true"></span>
+                    <span>Создать заказ</span>
+                </button>
+                <button class="nav-item" data-screen="taken-orders-screen" data-title="Взятые заказы" id="taken-orders-nav">
+                    <span class="nav-icon">✓</span>
+                    <span>Взятые заказы</span>
+                </button>
+                <button class="nav-item hidden" data-screen="my-orders-screen" data-title="Мои заказы" id="my-orders-nav">
+                    <span class="nav-icon">▤</span>
+                    <span>Мои заказы</span>
+                </button>
+                <button class="nav-item hidden" data-screen="admin-screen" data-title="Админ-панель" id="admin-nav">
+                    <span class="nav-icon">⚙</span>
+                    <span>Админка</span>
+                </button>
+                <button class="nav-item" data-screen="profile-screen" data-title="Профиль">
+                    <span class="nav-icon">♙</span>
+                    <span>Профиль</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="modal-backdrop hidden" id="create-order-modal">
+            <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="create-order-title">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow" id="create-order-eyebrow">Новый заказ</p>
+                        <h2 id="create-order-title">Создать заказ</h2>
+                    </div>
+                    <div class="page-number" id="order-page-number">1/3</div>
+                </div>
+
+                <form id="create-order-form" novalidate>
+                    <div class="order-step" data-step="1">
+                        <div class="field">
+                            <label>Режим заказа</label>
+                            <div class="mode-toggle" id="order-mode-toggle">
+                                <button type="button" data-mode="normal" class="active">Обычный</button>
+                                <button type="button" data-mode="responses">Отклики</button>
+                            </div>
+                            <span class="field-hint" id="order-mode-hint">Исполнитель сможет просто взять заказ</span>
+                        </div>
+                        <div class="field">
+                            <label for="order-title">Название заказа</label>
+                            <input type="text" id="order-title" placeholder="Например, нарисовать логотип">
+                            <span class="error" id="error-order-title"></span>
+                        </div>
+                        <div class="field">
+                            <label for="order-description">Описание</label>
+                            <textarea id="order-description" rows="6" placeholder="Опишите, что нужно сделать"></textarea>
+                            <span class="error" id="error-order-description"></span>
+                        </div>
+                    </div>
+
+                    <div class="order-step hidden" data-step="2">
+                        <div class="field">
+                            <label for="order-topic">Тема заказа</label>
+                            <select id="order-topic">
+                                <option value="">Выберите тему</option>
+                                <option>AI картинки</option>
+                                <option>АИ Видео</option>
+                                <option>АИ текст</option>
+                                <option>Телеграм бот</option>
+                                <option>пайтон код</option>
+                                <option>код</option>
+                                <option>приложение</option>
+                                <option>программа</option>
+                                <option>парсер</option>
+                            </select>
+                            <span class="error" id="error-order-topic"></span>
+                        </div>
+                        <div class="field">
+                            <label for="order-tags">Теги</label>
+                            <input type="text" id="order-tags" placeholder="Например: дизайн, logo, брендинг">
+                            <span class="field-hint">Введите теги через запятую</span>
+                        </div>
+                    </div>
+
+                    <div class="order-step hidden" data-step="3">
+                        <div class="field">
+                            <label for="order-price">Цена, ₽</label>
+                            <input type="number" id="order-price" min="1" placeholder="Например, 1500">
+                            <span class="error" id="error-order-price"></span>
+                        </div>
+                        <div class="field">
+                            <label for="order-deadline">Срок выполнения</label>
+                            <div class="deadline-chips" id="deadline-chips">
+                                <button type="button" data-days="1">1 день</button>
+                                <button type="button" data-days="3">3 дня</button>
+                                <button type="button" data-days="7">Неделя</button>
+                                <button type="button" data-days="14">2 недели</button>
+                                <button type="button" data-days="30">Месяц</button>
+                            </div>
+                            <div class="deadline-selects">
+                                <select id="deadline-day" aria-label="День"></select>
+                                <select id="deadline-month" aria-label="Месяц"></select>
+                                <select id="deadline-year" aria-label="Год"></select>
+                                <button type="button" class="deadline-clear hidden" id="deadline-clear" aria-label="Очистить срок">×</button>
+                            </div>
+                            <input type="hidden" id="order-deadline">
+                            <span class="field-hint" id="deadline-hint">Когда заказ нужно успеть сделать</span>
+                            <span class="error" id="error-order-deadline"></span>
+                        </div>
+                        <div class="field">
+                            <label>Дополнительные услуги</label>
+                            <div class="extras-list" id="extras-list">
+                                <div class="extra-row">
+                                    <input type="text" class="extra-name" maxlength="40" placeholder="Например, сделать за 1 день">
+                                    <input type="number" class="extra-price" min="1" max="5000" placeholder="Цена, ₽">
+                                </div>
+                            </div>
+                            <button type="button" class="add-extra-btn" id="add-extra">+</button>
+                            <span class="field-hint">До 40 символов и до 5000 ₽ за одну услугу</span>
+                            <span class="error" id="error-order-extras"></span>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary hidden" id="order-back">Назад</button>
+                        <button type="button" class="btn-primary" id="order-next">Далее</button>
+                        <button type="submit" class="btn-primary hidden" id="order-submit">Оплатить и отправить на проверку</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-backdrop hidden" id="notifications-modal">
+            <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="notifications-title">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Профиль</p>
+                        <h2 id="notifications-title">Уведомления</h2>
+                    </div>
+                </div>
+
+                <div class="notifications-list" id="notifications-list"></div>
+                <div class="empty-state hidden" id="notifications-empty-state">
+                    <div class="empty-icon">🔔</div>
+                    <h3>Уведомлений пока нет</h3>
+                    <p>Здесь будут появляться уведомления о ваших заказах.</p>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-primary" id="notifications-close">Закрыть</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-backdrop hidden" id="edit-profile-modal">
+            <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="edit-profile-title">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Профиль</p>
+                        <h2 id="edit-profile-title">Редактировать профиль</h2>
+                    </div>
+                </div>
+                <form id="edit-profile-form" novalidate>
+                    <div class="field">
+                        <label for="profile-edit-name">Имя</label>
+                        <input type="text" id="profile-edit-name" maxlength="30" placeholder="Ваше имя">
+                        <span class="error" id="error-profile-edit-name"></span>
+                    </div>
+                    <div class="field">
+                        <label for="profile-edit-about">О себе</label>
+                        <textarea id="profile-edit-about" rows="4" maxlength="300" placeholder="Расскажите, что вы умеете и чем полезны заказчикам"></textarea>
+                        <span class="field-hint">До 300 символов</span>
+                    </div>
+                    <div class="field">
+                        <label for="profile-edit-skills">Навыки</label>
+                        <input type="text" id="profile-edit-skills" placeholder="Например: дизайн, python, монтаж">
+                        <span class="field-hint">Введите навыки через запятую</span>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" id="edit-profile-cancel">Отмена</button>
+                        <button type="submit" class="btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-backdrop hidden" id="review-modal">
+            <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="review-title">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Оценка работы</p>
+                        <h2 id="review-title">Оставить отзыв</h2>
+                    </div>
+                </div>
+                <p class="review-order-name" id="review-order-name"></p>
+                <form id="review-form" novalidate>
+                    <div class="field">
+                        <label>Оценка</label>
+                        <div class="stars-input" id="stars-input">
+                            <button type="button" data-star="1">★</button>
+                            <button type="button" data-star="2">★</button>
+                            <button type="button" data-star="3">★</button>
+                            <button type="button" data-star="4">★</button>
+                            <button type="button" data-star="5">★</button>
+                        </div>
+                        <span class="error" id="error-review-rating"></span>
+                    </div>
+                    <div class="field">
+                        <label for="review-text">Комментарий</label>
+                        <textarea id="review-text" rows="4" maxlength="300" placeholder="Как прошла работа?"></textarea>
+                        <span class="field-hint">Необязательно, до 300 символов</span>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" id="review-cancel">Отмена</button>
+                        <button type="submit" class="btn-primary">Отправить отзыв</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-backdrop hidden" id="response-modal">
+            <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="response-title">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Отклик на заказ</p>
+                        <h2 id="response-title">Написать заказчику</h2>
+                    </div>
+                </div>
+                <p class="review-order-name" id="response-order-name"></p>
+                <form id="response-form" novalidate>
+                    <div class="field">
+                        <label for="response-text">Сопроводительное сообщение</label>
+                        <textarea id="response-text" rows="4" maxlength="500" placeholder="Расскажите, почему вы справитесь с этой задачей"></textarea>
+                        <span class="field-hint">Заказчик увидит ваше сообщение перед тем, как принять отклик</span>
+                        <span class="error" id="error-response-text"></span>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" id="response-cancel">Отмена</button>
+                        <button type="submit" class="btn-primary">Отправить отклик</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-backdrop hidden" id="responses-list-modal">
+            <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="responses-list-title">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Отклики исполнителей</p>
+                        <h2 id="responses-list-title">Выберите исполнителя</h2>
+                    </div>
+                </div>
+                <div class="responses-list hidden" id="responses-list"></div>
+                <p class="empty-state hidden" id="responses-list-empty">Пока никто не откликнулся на этот заказ.</p>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="responses-list-close">Закрыть</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop hidden" id="submit-work-modal">
+            <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="submit-work-title">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Сдача работы</p>
+                        <h2 id="submit-work-title">Отправить на проверку</h2>
+                    </div>
+                </div>
+                <p class="review-order-name" id="submit-work-order-name"></p>
+                <form id="submit-work-form" novalidate>
+                    <div class="field">
+                        <label for="submit-work-message">Комментарий к работе</label>
+                        <textarea id="submit-work-message" rows="3" maxlength="500" placeholder="Что сделано и как это соответствует ТЗ"></textarea>
+                    </div>
+                    <div class="field">
+                        <label>Материалы работы</label>
+                        <div class="submit-files-actions">
+                            <button type="button" class="btn-secondary" id="submit-files-pick">Выбрать файлы</button>
+                            <button type="button" class="btn-secondary" id="submit-folder-pick">Выбрать папку</button>
+                        </div>
+                        <input type="file" id="submit-files-input" multiple hidden>
+                        <input type="file" id="submit-folder-input" webkitdirectory hidden>
+                        <div class="submit-files-list hidden" id="submit-files-list"></div>
+                        <span class="field-hint">Файлы, архивы, код — суммарно до 3 МБ. Админ проверит работу по ТЗ и передаст заказчику.</span>
+                        <span class="error" id="error-submit-files"></span>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" id="submit-work-cancel">Отмена</button>
+                        <button type="submit" class="btn-primary">Отправить админу</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-backdrop hidden" id="submission-modal">
+            <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="submission-title">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Материалы заказа</p>
+                        <h2 id="submission-title">Работа исполнителя</h2>
+                    </div>
+                </div>
+                <p class="review-order-name" id="submission-order-name"></p>
+                <p class="response-message" id="submission-message"></p>
+                <div class="submit-files-list" id="submission-files"></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="submission-close">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
