@@ -63,10 +63,15 @@
     --tone-6: linear-gradient(135deg, #132549 0%, #1b3873 55%, #132549 100%);
 }
 
-/* Жёстко запрещаем горизонтальный прокат страницы
-   (даже один широкий элемент больше не раздвигает вьюпорт) */
-html {
+/* Жёстко запрещаем горизонтальный прокат страницы.
+   clip (если поддерживается) полностью отключает панораму на телефоне,
+   hidden — запасной вариант. overscroll блокирует инерцию за краем. */
+html,
+body {
     overflow-x: hidden;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+    max-width: 100%;
 }
 
 body {
@@ -628,6 +633,11 @@ a:focus-visible {
    ============================================================ */
 
 .app-shell {
+    /* Каркас не может быть шире видимой области,
+       даже если внутренний контент шире */
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     height: 100vh;
     /* svh — самый маленький вьюпорт: шапка и нижняя панель не прячутся под браузером */
     height: 100svh;
@@ -804,7 +814,7 @@ a:focus-visible {
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 0 24px 96px;
+    padding: 0 24px 20px;
     scrollbar-gutter: stable;
 }
 
@@ -1927,10 +1937,12 @@ a:focus-visible {
 .bottom-nav {
     display: flex;
     gap: 4px;
-    position: absolute;
+    /* Обычный участник flex-колонки, а не абсолютный слой:
+       прижата к низу каркаса, не может «уехать»,
+       обнажить пустоту или уйти под контент */
+    position: sticky;
     bottom: 0;
-    left: 0;
-    right: 0;
+    z-index: 4;
     flex-shrink: 0;
     padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px));
     background: rgba(13, 14, 19, 0.78);
@@ -2556,6 +2568,15 @@ a:focus-visible {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
     margin-top: 12px;
+    /* Ячейки сетки могут сжиматься, не раздвигая контейнер */
+    min-width: 0;
+}
+
+/* Без этого нативные input/select своей минимальной шириной
+   вылезают за узкую колонку на телефоне */
+.feed-filters > * {
+    width: 100%;
+    min-width: 0;
 }
 
 .feed-filters select,
@@ -3116,7 +3137,7 @@ a:focus-visible {
     }
 
     .app-screen {
-        padding: 0 20px 96px;
+        padding: 0 20px 16px;
     }
 
     .section-heading {
